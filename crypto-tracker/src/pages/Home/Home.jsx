@@ -1,5 +1,7 @@
+// pages/Home/Home.jsx
 import React, { useContext, useEffect, useState } from "react";
-import "./home.css";
+import { Link } from 'react-router-dom'; // Tambahkan import Link
+import "./Home.css"; // Pastikan path ke CSS sesuai
 import { CoinContext } from "../../context/CoinContext";
 
 const Home = () => {
@@ -27,6 +29,7 @@ const Home = () => {
       </div>
 
       <div className="crypto-table">
+        {/* Header Tabel */}
         <div className="table-layout">
           <p>#</p>
           <p>Coins</p>
@@ -35,17 +38,25 @@ const Home = () => {
           <p className="market-cap">Market Cap</p>
         </div>
 
+        {/* Body Tabel dengan Link */}
         {displayCoin &&
           displayCoin.slice(0, 10).map((item, index) => (
-            <div className="table-layout" key={index}>
+            <Link
+              to={`/coin/${item.id}`} // Gunakan item.id untuk URL detail
+              key={index}
+              className="table-row" // Gunakan kelas CSS baru untuk styling klik
+              style={{ textDecoration: 'none', color: 'inherit' }} // Hilangkan dekorasi default Link
+            >
               {/* Rank */}
               <p>{item.market_cap_rank}</p>
 
               {/* Coin Info */}
               <div className="coin-info">
                 <img src={item.image} alt={item.name} />
-                <p>{item.name}</p>
-                <span className="symbol">{item.symbol.toUpperCase()}</span>
+                <div>
+                  <p>{item.name}</p>
+                  <span className="symbol">{item.symbol.toUpperCase()}</span>
+                </div>
               </div>
 
               {/* Price */}
@@ -72,7 +83,7 @@ const Home = () => {
                 {currency.symbol}
                 {item.market_cap.toLocaleString()}
               </p>
-            </div>
+            </Link>
           ))}
       </div>
     </div>

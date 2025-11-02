@@ -1,19 +1,19 @@
-import React from 'react'
-import Navbar from './components/Navbar/Navbar'
-import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home/Home'
-import Coin from './pages/Coin/Coin'
+// App.jsx
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import Home from './pages/Home/Home';
+import CoinDetail from './components/CoinDetail/CoinDetail'; // Pastikan path ini benar
 
-const App = () => {
+function App() {
   return (
-    <div className='app'>
-      <Navbar/>
+    <div className="app"> {/* Ini memberi background gradient */}
+      <Navbar />
       <Routes>
-        <Route path='/' element={<Home/>} />
-        <Route path='/coin/:coinId' element={<Coin/>} />
+        <Route path="/" element={<Home />} />
+        <Route path="/coin/:id" element={<CoinDetail />} /> {/* Pastikan ini ada */}
       </Routes>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
