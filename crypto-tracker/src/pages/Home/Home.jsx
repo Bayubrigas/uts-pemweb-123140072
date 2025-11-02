@@ -1,7 +1,7 @@
 // pages/Home/Home.jsx
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from 'react-router-dom'; // Tambahkan import Link
-import "./Home.css"; // Pastikan path ke CSS sesuai
+import { Link } from 'react-router-dom';
+import "./Home.css";
 import { CoinContext } from "../../context/CoinContext";
 
 const Home = () => {
@@ -42,10 +42,10 @@ const Home = () => {
         {displayCoin &&
           displayCoin.slice(0, 10).map((item, index) => (
             <Link
-              to={`/coin/${item.id}`} // Gunakan item.id untuk URL detail
+              to={`/coin/${item.id}`}
               key={index}
-              className="table-row" // Gunakan kelas CSS baru untuk styling klik
-              style={{ textDecoration: 'none', color: 'inherit' }} // Hilangkan dekorasi default Link
+              className="table-row"styling klik
+              style={{ textDecoration: 'none', color: 'inherit' }}
             >
               {/* Rank */}
               <p>{item.market_cap_rank}</p>

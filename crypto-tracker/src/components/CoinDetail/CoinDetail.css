@@ -43,7 +43,6 @@
   text-transform: uppercase;
 }
 
-/* PRICE INFO */
 .price-info {
   margin-top: 1rem;
 }
@@ -68,7 +67,6 @@
   color: #ff5252;
 }
 
-/* STATS */
 .stats {
   margin-top: 1rem;
   display: flex;
@@ -85,7 +83,6 @@
   font-size: 0.9rem;
 }
 
-/* CONVERTER */
 .converter {
   margin-top: 1.5rem;
   border-top: 1px solid #2e2e3d;
@@ -97,7 +94,6 @@
   margin-bottom: 0.5rem;
 }
 
-/* CONVERTER */
 .converter {
   margin-top: 1.5rem;
   border-top: 1px solid #2e2e3d;
@@ -164,9 +160,6 @@ input:focus {
   margin-top: 0.4rem;
 }
 
-/* =============================
-   RIGHT PANEL (CHART)
-   ============================= */
 .coin-right {
   flex: 2;
   min-width: 400px;
@@ -182,9 +175,6 @@ input:focus {
   height: 100%;
 }
 
-/* =============================
-   RESPONSIVE
-   ============================= */
 @media (max-width: 900px) {
   .coin-detail-container {
     flex-direction: column;
@@ -197,9 +187,6 @@ input:focus {
   }
 }
 
-/* =============================
-   LOADING & ERROR
-   ============================= */
 .loading,
 .error {
   text-align: center;
@@ -207,7 +194,6 @@ input:focus {
   margin-top: 3rem;
 }
 
-/* ==== FIX: Prevent converter overflow ==== */
 .converter {
   word-wrap: break-word;
   overflow: hidden;
@@ -221,17 +207,15 @@ input:focus {
   white-space: nowrap;
 }
 
-/* Agar panjang angka tidak membuat layout melebar */
 .inputs input[type="number"]::-webkit-inner-spin-button,
 .inputs input[type="number"]::-webkit-outer-spin-button {
   margin: 0;
 }
 
 .inputs div {
-  min-width: 0; /* Penting agar flex item tidak memaksa melebar */
+  min-width: 0;
 }
 
-/* Jika angka terlalu panjang di layar kecil */
 @media (max-width: 480px) {
   .inputs {
     flex-direction: column;

@@ -2,10 +2,10 @@ import React, { useContext } from "react";
 import "./Navbar.css";
 import logo from "../../assets/logo.png";
 import arrow_icon from "../../assets/arrow_icon.png";
-import { CoinContext } from "../../context/CoinContext"; // ✅ ambil Context, bukan Provider
+import { CoinContext } from "../../context/CoinContext";
 
 const Navbar = () => {
-  const { setCurrency } = useContext(CoinContext); // ✅ pakai useContext, bukan use()
+  const { setCurrency } = useContext(CoinContext);
 
   const currencyHandler = (event) => {
     switch (event.target.value) {

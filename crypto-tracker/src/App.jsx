@@ -1,8 +1,7 @@
-// App.jsx
 import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home/Home';
-import CoinDetail from './components/CoinDetail/CoinDetail'; // Pastikan path ini benar
+import CoinDetail from './components/CoinDetail/CoinDetail';
 
 function App() {
   return (
