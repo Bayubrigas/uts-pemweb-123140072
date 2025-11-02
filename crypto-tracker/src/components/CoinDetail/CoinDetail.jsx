@@ -1,32 +1,60 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from 'recharts';
 import './CoinDetail.css';
 
 const CoinDetail = () => {
   const { id } = useParams();
   const [coin, setCoin] = useState(null);
+  const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Converter states
+  // Converter state
   const [usdValue, setUsdValue] = useState(1);
   const [coinValue, setCoinValue] = useState(0);
 
   useEffect(() => {
     const fetchCoinData = async () => {
       try {
-        const response = await fetch(
-          `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false`
-        );
-        if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        const [coinRes, chartRes] = await Promise.all([
+          fetch(
+            `https://api.coingecko.com/api/v3/coins/${id}?localization=false&tickers=false&market_data=true`
+          ),
+          fetch(
+            `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=usd&days=7`
+          ),
+        ]);
 
-        const data = await response.json();
-        setCoin(data);
-        setCoinValue(1 / data.market_data.current_price.usd);
+        if (!coinRes.ok || !chartRes.ok) throw new Error('Gagal memuat data');
+
+        const coinData = await coinRes.json();
+        const chartData = await chartRes.json();
+
+        setCoin(coinData);
+        setChartData(
+          chartData.prices.map(([timestamp, price]) => ({
+            date: new Date(timestamp).toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+            }),
+            price,
+          }))
+        );
+
+        setCoinValue(1 / coinData.market_data.current_price.usd);
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching coin data:', err);
-        setError(err.message || 'Gagal memuat data coin');
+        console.error('Error:', err);
+        setError('Gagal memuat data koin.');
         setLoading(false);
       }
     };
@@ -73,7 +101,7 @@ const CoinDetail = () => {
         </div>
       </div>
 
-      {/* Main Info */}
+      {/* Price Info */}
       <div className="coin-stats">
         <div className="card">
           <h2>${formatNumber(price)}</h2>
@@ -93,6 +121,33 @@ const CoinDetail = () => {
           <h3>Supply</h3>
           <p>{formatNumber(coin.market_data.circulating_supply)} / {formatNumber(coin.market_data.total_supply)}</p>
         </div>
+      </div>
+
+      {/* Chart Section */}
+      <div className="chart-card">
+        <h2>7-Day Price Chart</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={chartData}>
+            <CartesianGrid strokeDasharray="3 3" stroke="#3a2f55" />
+            <XAxis dataKey="date" stroke="#aaa" />
+            <YAxis
+              domain={['auto', 'auto']}
+              tickFormatter={(value) => `$${value.toFixed(0)}`}
+              stroke="#aaa"
+            />
+            <Tooltip
+              formatter={(value) => `$${value.toLocaleString()}`}
+              contentStyle={{ backgroundColor: '#1d152f', borderRadius: '10px', color: '#fff' }}
+            />
+            <Line
+              type="monotone"
+              dataKey="price"
+              stroke="#7927ff"
+              strokeWidth={3}
+              dot={false}
+            />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
 
       {/* Converter */}

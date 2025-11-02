@@ -204,3 +204,16 @@
     margin-top: 1rem;
   }
 }
+
+.chart-card {
+  background: #1d152f;
+  padding: 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 15px rgba(121, 39, 255, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.chart-card:hover {
+  transform: translateY(-5px);
+}
